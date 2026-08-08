@@ -1,226 +1,276 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>myportfolio - Portfolio</title>
-
-```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanaparthi Karunya Sri — Portfolio</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        background: #f4f4f4;
-        color: #333;
-    }
+  :root{
+    --ink:#0e1420;
+    --panel:#131b2b;
+    --panel-2:#182238;
+    --line:#26324a;
+    --text:#d9e2f2;
+    --text-dim:#8393b0;
+    --amber:#e8a944;
+    --amber-dim:#a97a34;
+    --green:#5fd0a0;
+    --mono: 'Lucida Console', 'Lucida Sans Typewriter', monospace;
+    --sans: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
 
-    header {
-        background: #222;
-        color: white;
-        text-align: center;
-        padding: 40px 20px;
-    }
+  ::selection{background:var(--amber);color:var(--ink);}
 
-    header img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-    }
+  /* Scanline / subtle grid texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:0.05;
+    pointer-events:none;
+    z-index:0;
+  }
 
-    section {
-        background: white;
-        margin: 20px auto;
-        padding: 25px;
-        max-width: 900px;
-        border-radius: 10px;
-    }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
 
-    h2 {
-        color: #0077cc;
-    }
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(14,20,32,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;}
+  .nav-brand{font-family:var(--mono);font-size:14px;color:var(--amber);}
+  .nav-links{display:flex;gap:28px;font-family:var(--mono);font-size:13px;color:var(--text-dim);}
+  .nav-links a:hover{color:var(--amber);}
 
-    .project {
-        border-left: 4px solid #0077cc;
-        padding-left: 15px;
-        margin-bottom: 20px;
-    }
+  /* HERO — terminal window */
+  header{padding:90px 0 60px;position:relative;}
+  header::before{
+    content:"";
+    position:absolute;
+    top:20px; left:50%;
+    width:600px; height:340px;
+    background:radial-gradient(circle, rgba(232,169,68,0.16), transparent 70%);
+    transform:translateX(-50%);
+    pointer-events:none;
+    z-index:-1;
+  }
+  .terminal{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 40px 80px -25px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,169,68,0.05);
+    animation:rise .6s ease-out;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .term-bar{
+    background:var(--panel-2);
+    padding:10px 16px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.r{background:#e0645b;} .dot.y{background:#e8b84a;} .dot.g{background:#5fd0a0;}
+  .term-title{margin-left:12px;font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+  .term-body{padding:32px 28px 36px;font-family:var(--mono);font-size:15px;}
+  .term-body .line{margin-bottom:10px;}
+  .prompt{color:var(--green);}
+  .path{color:var(--amber-dim);}
+  .out{color:var(--text-dim);}
+  .term-name{
+    font-family:var(--sans);
+    font-size:clamp(32px,5vw,48px);
+    font-weight:700;
+    color:var(--text);
+    margin:18px 0 6px;
+    letter-spacing:-0.02em;
+  }
+  .term-role{color:var(--amber);font-family:var(--mono);font-size:15px;margin-bottom:18px;}
+  .cursor{display:inline-block;width:9px;height:18px;background:var(--amber);vertical-align:middle;animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .term-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px;font-family:var(--mono);font-size:13px;}
+  .term-links a{color:var(--text-dim);border-bottom:1px dashed var(--line);padding-bottom:2px;transition:color .15s,border-color .15s;}
+  .term-links a:hover{color:var(--amber);border-color:var(--amber);}
 
-    .skills span {
-        display: inline-block;
-        background: #0077cc;
-        color: white;
-        padding: 8px 12px;
-        margin: 5px;
-        border-radius: 5px;
-    }
+  /* SECTION HEADERS */
+  section{padding:64px 0 60px;border-top:1px solid var(--line);}
+  section .sec-title{margin-bottom:38px;}
+  .sec-label{
+    font-family:var(--mono);font-size:12px;color:var(--amber-dim);
+    letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .sec-title{font-size:28px;font-weight:700;margin-bottom:28px;letter-spacing:-0.01em;position:relative;display:inline-block;}
+  .sec-title::after{
+    content:"";position:absolute;left:0;bottom:-10px;width:36px;height:3px;
+    background:var(--amber);border-radius:2px;
+  }
 
-    footer {
-        text-align: center;
-        background: #222;
-        color: white;
-        padding: 15px;
-    }
+  /* SKILLS */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;}
+  .skill-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    padding:16px 14px;font-family:var(--mono);font-size:13px;
+    transition:border-color .15s,transform .15s;
+  }
+  .skill-card:hover{border-color:var(--amber-dim);transform:translateY(-2px);}
+  .skill-tag{color:var(--text-dim);font-size:11px;display:block;margin-bottom:6px;}
+  .skill-name{color:var(--text);font-size:14px;}
 
-    a {
-        color: #0077cc;
-    }
+  /* PROJECTS */
+  .project{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:24px 26px;margin-bottom:20px;
+  }
+  .project-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .project-name{font-size:18px;font-weight:700;color:var(--text);}
+  .project-tag{font-family:var(--mono);font-size:11px;color:var(--green);border:1px solid var(--line);padding:3px 8px;border-radius:20px;}
+  .project-desc{color:var(--text-dim);font-size:14px;margin-bottom:12px;}
+  .project-stack{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--amber-dim);}
+  .project-stack span{border:1px solid var(--line);padding:2px 8px;border-radius:4px;}
+  .placeholder-note{font-size:12px;color:var(--text-dim);font-style:italic;margin-top:10px;}
+
+  /* EDUCATION */
+  .edu-row{
+    display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .edu-row:last-child{border-bottom:none;}
+  .edu-year{font-family:var(--mono);font-size:12px;color:var(--amber-dim);min-width:110px;}
+  .edu-name{font-weight:600;color:var(--text);}
+  .edu-detail{color:var(--text-dim);font-size:13px;}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .contact-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    padding:18px;display:flex;flex-direction:column;gap:4px;
+    transition:border-color .15s;
+  }
+  .contact-card:hover{border-color:var(--amber-dim);}
+  .contact-label{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;}
+  .contact-value{font-size:14px;color:var(--text);word-break:break-word;}
+
+  footer{padding:36px 0 60px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+
+  @media (max-width:600px){
+    .nav-links{gap:16px;font-size:11px;}
+    .term-body{padding:22px 18px 28px;font-size:13px;}
+    .sec-title{font-size:22px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .cursor{animation:none;}
+    html{scroll-behavior:auto;}
+  }
 </style>
-```
-
 </head>
-
 <body>
 
+<nav>
+  <div class="wrap">
+    <div class="nav-brand">karunya.sri</div>
+    <div class="nav-links">
+      <a href="#skills">skills</a>
+      <a href="#education">education</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
 <header>
-
-```
-<!-- CHANGE YOUR NAME HERE -->
-<h1>karunya sri</h1>
-
-<!-- CHANGE YOUR ROLE HERE -->
-<h3> Student </h3>
-
-<!-- ADD YOUR IMAGE HERE -->
-<img src="profile.jpg" alt="Profile Photo">
-
-<p>
-    Welcome to my personal portfolio website.
-</p>
-```
-
+  <div class="wrap">
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <div class="term-title">about.sh — karunya-132</div>
+      </div>
+      <div class="term-body">
+        <div class="line"><span class="prompt">$</span> <span class="path">whoami</span></div>
+        <div class="term-name">Kanaparthi Karunya Sri</div>
+        <div class="term-role">// Diploma Final Year · Computer Engineering</div>
+        <div class="line out">$ cat objective.txt</div>
+        <div class="line" style="color:var(--text);">Aspiring software developer looking to build practical, real-world projects and start a career in tech.<span class="cursor"></span></div>
+        <div class="term-links">
+          <a href="mailto:kanaparthikarunyasri@gmail.com">✉ email</a>
+          <a href="https://github.com/karunya-132" target="_blank">⌥ github</a>
+          <a href="https://linkedin.com/in/karunyasrikanaparthi" target="_blank">in linkedin</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
-<section>
-
-```
-<!-- ABOUT ME -->
-<h2>About Me</h2>
-
-<p>
-    I am a student and i  had interested in building websites
-    and learning new technologies.
-</p>
-```
-
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-label">01 · Toolkit</div>
+    <div class="sec-title">Skills</div>
+    <div class="skill-grid">
+      <div class="skill-card"><span class="skill-tag">language</span><span class="skill-name">C</span></div>
+      <div class="skill-card"><span class="skill-tag">language</span><span class="skill-name">Java</span></div>
+      <div class="skill-card"><span class="skill-tag">language</span><span class="skill-name">Python</span></div>
+      <div class="skill-card"><span class="skill-tag">markup</span><span class="skill-name">HTML</span></div>
+      <div class="skill-card"><span class="skill-tag">core cs</span><span class="skill-name">Data Structures (C &amp; Python)</span></div>
+      <div class="skill-card"><span class="skill-tag">creative</span><span class="skill-name">Multimedia</span></div>
+    </div>
+  </div>
 </section>
 
-<section>
-
-```
-<!-- SKILLS -->
-<h2>Skills</h2>
-
-<div class="skills">
-
-    <!-- ADD OR REMOVE SKILLS HERE -->
-    <span>HTML</span>
-    <span>CSS</span>
-    <span>c</span>
-    <span>Python</span>
-   <span>ds</span>
-   <span>java</span>
-</div>
-```
-
+<section id="education">
+  <div class="wrap">
+    <div class="sec-label">02 · Timeline</div>
+    <div class="sec-title">Education</div>
+    <div class="edu-row">
+      <div class="edu-year">Final Year</div>
+      <div>
+        <div class="edu-name">A.A.N.M &amp; V.V.R.S.R Polytechnic</div>
+        <div class="edu-detail">Diploma in Computer Engineering</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section>
-
-```
-<!-- PROJECTS -->
-<h2>Projects</h2>
-
-
-<div class="project">
-
-    <h3>hospital management system 1</h3>
-
-    <p>
-        my project is not completed 
-    </p>
-
-    <p>
-        Link:
-        <a href="#">Project URL</a>
-    </p>
-
-</div>
-
-
-<div class="project">
-
-    <h3>Project Name 2</h3>
-
-    <p>
-        Add another project description here.
-    </p>
-
-    <p>
-        Link:
-        <a href="#">Project URL</a>
-    </p>
-
-</div>
-```
-
-</section>
-
-<section>
-
-```
-<!-- EDUCATION -->
-<h2>Education</h2>
-
-<p>
-    a.a.n.mv.v.r.s.r polytechnic gudlavalleru
-</p>
-```
-
-</section>
-
-<section>
-
-```
-<!-- EXPERIENCE -->
-<h2>Experience</h2>
-
-<p>
-    Add internships, jobs, freelance work, or achievements here.
-</p>
-```
-
-</section>
-
-<section>
-
-```
-<!-- CONTACT -->
-<h2>Contact</h2>
-
-<p>Email: kanaparthkarunyasri@email.com</p>
-
-<p>
-    LinkedIn:
-    <a href="#">karunyasrikanaparthi</a>
-</p>
-
-<p>
-    GitHub:
-    <a href="#">karunyasri-132</a>
-</p>
-```
-
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-label">03 · Reach Me</div>
+    <div class="sec-title">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="contact-label">Email</span>
+        <span class="contact-value">kanaparthikarunyasri@gmail.com</span>
+      </div>
+      <div class="contact-card">
+        <span class="contact-label">GitHub</span>
+        <span class="contact-value">github.com/karunya-132</span>
+      </div>
+      <div class="contact-card">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-value">linkedin.com/in/karunyasrikanaparthi</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-
-```
-<p>
-    © 2026 karunya sri. All Rights Reserved.
-</p>
-```
-
+  <div class="wrap">
+    built by Kanaparthi Karunya Sri &mdash; compiled with care
+  </div>
 </footer>
 
 </body>
